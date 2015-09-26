@@ -1,28 +1,42 @@
 describe('invertedIndex: ', function() {
   describe('Read book data', function() {
-  //var url = "books.json";
+    var jsonData;
 
-  // xmlhttp.onreadystatechange = function() {
-  // if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-  //     var myArr = JSON.parse(xmlhttp.responseText);
-  //     myFunction(myArr);
-  //     }
-  // }
+    beforeEach(function(done) {
+      var url      = "http://localhost:8000/jasmine/books.json";
+      var xmlhttp  = new XMLHttpRequest();
 
-  // xmlhttp.open("GET", url, true);
-  // xmlhttp.send();
+      xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+          jsonData = JSON.parse(xmlhttp.responseText);
+          done();
+        }
+      };
 
-  // function myFunction (myArr) {
-  //   // body...
-  //   console.log(myArr);
-  // }
-  
+      xmlhttp.open("GET", url, true);
+      xmlhttp.send();
+    });
+
     it('should read the JSON file', function() {
-      expect(json).toBeDefined();
+      expect(jsonData).toBeDefined();
     });
 
     it('should assert that it is not empty', function() {
-      expect(json.length).toBeGreaterThan(1);
+      expect(jsonData.length).toBeGreaterThan(0);
+      jsonData.forEach(function(elem, index) {
+        expect(elem).toEqual(jasmine.any(Object));
+        console.log(elem, index);
+      });
+    });
+
+    it('should contain a property value string for each object in JSON file', function() {
+      jsonData.forEach(function(elem, index) {
+        console.log(elem, index);
+        for (var i in elem) {
+          console.log(elem[i]);
+          expect(elem[i]).toEqual(jasmine.any(String))
+        }
+      });
     });
   });
 
