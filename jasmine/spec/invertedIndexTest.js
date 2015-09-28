@@ -2,19 +2,8 @@ describe('invertedIndex: ', function() {
   describe('Read book data', function() {
     var jsonData;
 
-    beforeEach(function(done) {
-      var url      = "http://localhost:8000/jasmine/books.json";
-      var xmlhttp  = new XMLHttpRequest();
-
-      xmlhttp.onreadystatechange = function() {
-        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-          jsonData = JSON.parse(xmlhttp.responseText);
-          done();
-        }
-      };
-
-      xmlhttp.open("GET", url, true);
-      xmlhttp.send();
+    beforeEach(function() {
+      jsonData = load();
     });
 
     it('should read the JSON file', function() {
@@ -41,7 +30,9 @@ describe('invertedIndex: ', function() {
   });
 
   xdescribe('Populate Index', function() {
-    
+    it('should behave...', function() {
+      expect()
+    });
   });
 
   xdescribe('Search index', function() {
