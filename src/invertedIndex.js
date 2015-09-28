@@ -10,8 +10,9 @@ function loadJSON (url, callback) {
     ? new XMLHttpRequest() 
       : new ActiveXObject('Microsoft.XMLHTTP');
 
-  if (xmlhttp.overrideMimeType) 
+  if (xmlhttp.overrideMimeType) {
     xmlhttp.overrideMimeType("application/json");
+  };
 
   xmlhttp.open('GET', url, false);
 
@@ -24,13 +25,13 @@ function loadJSON (url, callback) {
        */
       callback(xmlhttp.responseText);
     };
-  }
+  };
   xmlhttp.send(null);
-}
+};
 
 /**
  * [load call loadJSON() with two argument a url and a callback]
- * @return {[Object]} [JSON object]
+ * @return {[Object]} [JSON Object]
  */
 function load () {
   // body...
@@ -40,11 +41,16 @@ function load () {
   // call to loadJSON() with anonymous callback
   loadJSON(
     url, 
+    function (response) {
+      // body...
+      // parse JSON string into object
+      jsonresponse = JSON.parse(response);
+    }
     // Arrow Function (ES6): parse JSON string into object
-    response => jsonresponse = JSON.parse(response)
+    // response => jsonresponse = JSON.parse(response)
   )
   return jsonresponse;
-}
+};
 
 var a = load();
 console.log(a);
