@@ -41,10 +41,6 @@ describe('invertedIndex: ', function() {
       expect(getIndex).toBeDefined();
     });
 
-    it('should ensure index is correct', function() {
-      expect(getIndex['Alice']).toEqual([0]);
-    });
-
     it('should verify the index maps the string keys to the correct objects in the JSON array', function() {
       expect(getIndex['Alice']).toEqual([0]);
       expect(getIndex['Lord']).toEqual([1])
@@ -53,7 +49,10 @@ describe('invertedIndex: ', function() {
     });
   });
 
-  xdescribe('Search index', function() {
-
+  describe('Search index', function() {
+    it('should return an array of indices of the correct objects that contain the words in the search query', function() {
+      expect(index.searchIndex('Alice', 'of', 'Rings')).toEqual([0, 0, 1, 1]);
+      expect(index.searchIndex(['Alice', 'of', 'Rings'])).toEqual([0, 0, 1, 1]);
+    });
   });
 });
