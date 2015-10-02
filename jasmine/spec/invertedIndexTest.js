@@ -1,9 +1,10 @@
 describe('invertedIndex: ', function() {
   // Global Variables
-  var jsonData  = undefined
+  var jsonData
     , url       = "http://localhost:8000/jasmine/books.json"
-    , index     = Index() // create an instance of the Index constructor
-    , bookIndex  = index.createIndex(url); // call createIndex method, *bookIndex* used in suite : Populate Index
+    , index     = new Index() // create an instance of the Index constructor
+    , ref       = index.createIndex(url)
+    , getIndex  = index.getIndex();
 
   describe('Read book data', function() {
     beforeEach(function() {
@@ -36,21 +37,23 @@ describe('invertedIndex: ', function() {
 
   describe('Populate Index', function() {
     it('should verify index is created once JSON file has been read', function() {
-      expect(bookIndex.length).not.toBe(0);
+      expect(getIndex.length).not.toBe(0);
+      expect(getIndex).toBeDefined();
     });
 
     it('should ensure index is correct', function() {
-      bookIndex.forEach(function(elem, index) {
-        expect(index).toEqual(jasmine.any(Number));
-      })
+      expect(getIndex['Alice']).toEqual([0]);
     });
 
-    xit('should verify the index maps the string keys to the correct objects in the JSON array', function() {
-
+    it('should verify the index maps the string keys to the correct objects in the JSON array', function() {
+      expect(getIndex['Alice']).toEqual([0]);
+      expect(getIndex['Lord']).toEqual([1])
+      expect(getIndex['of']).toEqual([0, 1]);
+      expect(getIndex['a']).toEqual([0, 1])
     });
   });
 
   xdescribe('Search index', function() {
-    
+
   });
 });
