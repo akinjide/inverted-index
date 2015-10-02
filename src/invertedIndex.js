@@ -99,3 +99,48 @@ Index.prototype.createIndex = function(filePath) {
   });
   this.index = posIndex;
 };
+
+/**
+ * [getIndex contains words and indexes]
+ * @return {[Object]} [returns words and indexes of 'filePath' argument]
+ */
+Index.prototype.getIndex = function() {
+  return this.index;
+};
+
+Index.prototype.searchIndex = function(terms) {
+  var fn
+    , i
+    , j
+    , k
+    , len
+    , posArr = []
+    , line_num
+    , location
+    , locations;
+
+    fn = this.index;
+    !(typeof terms === 'object')
+      ? console.log(location = arguments)
+        : console.log(location = terms)
+
+    for (i in fn) {
+      for (j = 0; j < location.length; j++) {
+        if (i === location[j]) 
+          for (k = 0; k < fn[i].length; k++) {
+            posArr.push(fn[i][k]);
+          };
+      }
+     // console.log(fn[i])
+    }
+    return posArr;
+};
+
+
+
+
+
+
+
+
+
