@@ -51,8 +51,9 @@ describe('invertedIndex: ', function() {
 
   describe('Search index', function() {
     it('should return an array of indices of the correct objects that contain the words in the search query', function() {
-      expect(index.searchIndex('Alice', 'of', 'Rings')).toEqual([0, 0, 1, 1]);
-      expect(index.searchIndex(['Alice', 'of', 'Rings'])).toEqual([0, 0, 1, 1]);
+      expect(index.searchIndex('Alice', 'a', 'of', 'Lord')).toEqual([0, 0, 1, 0, 1, 1]);
+      expect(index.searchIndex(['Alice', 'a', 'of', 'Lord'])).toEqual([0, 0, 1, 0, 1, 1]);
+      expect(index.searchIndex(['and', 'man', 'the'])).toEqual([0, 1, 1, 1]);
     });
   });
 });
