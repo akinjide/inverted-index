@@ -125,8 +125,8 @@ Index.prototype.searchIndex = function(terms) {
 
     fn = this.index;
     !(typeof terms === 'object')
-      ? console.log(location = arguments)
-        : console.log(location = terms)
+      ? location = arguments
+        : location = terms
 
     for (i in fn) {
       for (j = 0, len = location.length; j < len; j++) {
@@ -137,5 +137,9 @@ Index.prototype.searchIndex = function(terms) {
         };
       };
     };
+    
+    // for (var i = 0; i < )
+    // if (fn[i] === location.indexOf[location[i]]) {
+   // }
   return posArr;
 };
