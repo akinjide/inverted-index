@@ -36,7 +36,7 @@ function loadJSON (url, callback) {
 function load (url) {
   // body...
   // var url           = "http://localhost:8000/jasmine/books.json"
-  var jsonresponse  = undefined;
+  var jsonresponse;
   
   // call to loadJSON() with anonymous callback
   loadJSON(
@@ -73,7 +73,8 @@ Index.prototype.createIndex = function(filePath) {
     , posArr   = []
     , j        = 0
     , words
-    , i;
+    , i
+    , len;
 
   file.forEach(function(elem, index) {
     /**
@@ -81,16 +82,15 @@ Index.prototype.createIndex = function(filePath) {
      * text formatting.
      */
     words = JSON.stringify(elem)
-      .replace(/\btitle\b|\btext\b|,(?=\s)|[:.{}""]/g, '')
       .replace(/,(?=\S)/g, ' ')
-      .split(' ');
-    for (i = 0; i < words.length; i++) {
+      .replace(/\btitle\b|\btext\b|,(?=\s)|[:.{}""]/g, '')
+      .split(' '); 
+    for (i = 0, len = words.length; i < len; i++) {
       if (posIndex.hasOwnProperty(words[i])) {
         posArr = posIndex[words[i]];
         if (posArr.indexOf(index) === -1) {
           posArr.push(index);
           posIndex[words[i]] = posArr;
-          console.log(posIndex[words[i]])
         }
       } else {
         posIndex[words[i]] = [index];
@@ -108,16 +108,20 @@ Index.prototype.getIndex = function() {
   return this.index;
 };
 
+/**
+ * [searchIndex query createIndex return value]
+ * @param terms [contains the words to search]
+ * @return {[Array]}       [returns Array of numbers, representing the index of the argument]
+ */
 Index.prototype.searchIndex = function(terms) {
   var fn
     , i
     , j
     , k
     , len
+    , len2
     , posArr = []
-    , line_num
-    , location
-    , locations;
+    , location;
 
     fn = this.index;
     !(typeof terms === 'object')
@@ -125,22 +129,13 @@ Index.prototype.searchIndex = function(terms) {
         : console.log(location = terms)
 
     for (i in fn) {
-      for (j = 0; j < location.length; j++) {
-        if (i === location[j]) 
-          for (k = 0; k < fn[i].length; k++) {
+      for (j = 0, len = location.length; j < len; j++) {
+        if (i === location[j]) {
+          for (k = 0, len2 = fn[i].length; k < len2; k++) {
             posArr.push(fn[i][k]);
           };
-      }
-     // console.log(fn[i])
-    }
-    return posArr;
+        };
+      };
+    };
+  return posArr;
 };
-
-
-
-
-
-
-
-
-
