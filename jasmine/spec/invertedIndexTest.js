@@ -1,7 +1,7 @@
 describe('invertedIndex: ', function() {
   // Global Variables
   var jsonData
-    , url       = "http://localhost:8000/jasmine/books.json"
+    , url       = "http://localhost:4000/jasmine/books.json"
     , index     = new Index() // create an instance of the Index constructor
     , ref       = index.createIndex(url)
     , getIndex  = index.getIndex();
