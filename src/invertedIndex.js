@@ -33,16 +33,15 @@ function loadJSON (url, callback) {
  * [load call loadJSON() with two argument a url and a callback]
  * @return {[Object]} [JSON Object]
  */
-function load () {
+function load (url) {
   // body...
-  var url           = "http://localhost:8000/jasmine/books.json"
-    , jsonresponse  = undefined;
+  // var url           = "http://localhost:8000/jasmine/books.json"
+  var jsonresponse  = undefined;
   
   // call to loadJSON() with anonymous callback
   loadJSON(
     url, 
     function (response) {
-      // body...
       // parse JSON string into object
       jsonresponse = JSON.parse(response);
     }
@@ -52,5 +51,51 @@ function load () {
   return jsonresponse;
 };
 
-var a = load();
-console.log(a);
+// Class definition / constructor
+var Index = function () {
+  // arguments.callee property contains the currently executing function.
+  // The ‘if’ statement checks whether ‘this’ is an instance of the object and returns one if necessary
+  if (!(this instanceof arguments.callee)) {
+    return new Index();
+  };
+
+  this.index;
+};
+
+/**
+ * [createIndex {{Method}} creates an index from the argument]
+ * @param  {[JSON Object]} filePath [argument passed when this method is called]
+ * @return {[Object]}       [returns list of words with indexes]
+ */
+Index.prototype.createIndex = function(filePath) {
+  var file     = load(filePath)
+    , posIndex = {}
+    , posArr   = []
+    , j        = 0
+    , words
+    , i;
+
+  file.forEach(function(elem, index) {
+    /**
+     * converts value of elem to a string, removes Object key, whitespaces and other
+     * text formatting.
+     */
+    words = JSON.stringify(elem)
+      .replace(/\btitle\b|\btext\b|,(?=\s)|[:.{}""]/g, '')
+      .replace(/,(?=\S)/g, ' ')
+      .split(' ');
+    for (i = 0; i < words.length; i++) {
+      if (posIndex.hasOwnProperty(words[i])) {
+        posArr = posIndex[words[i]];
+        if (posArr.indexOf(index) === -1) {
+          posArr.push(index);
+          posIndex[words[i]] = posArr;
+          console.log(posIndex[words[i]])
+        }
+      } else {
+        posIndex[words[i]] = [index];
+      }
+    }
+  });
+  this.index = posIndex;
+};
